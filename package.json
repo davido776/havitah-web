@@ -1,5 +1,5 @@
 {
-  "name": "havilah-landing",
+  "name": "havitah-landing",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "next": "16.1.5",
+    "mysql2": "^3.11.0",
+    "nodemailer": "^6.9.15",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
