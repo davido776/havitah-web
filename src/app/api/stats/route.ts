@@ -1,11 +1,16 @@
 import pool from '@/lib/db';
+import { RowDataPacket } from 'mysql2';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+type EarlyAccessRow = RowDataPacket & {
+  count: number;
+};
+
 export async function GET() {
   try {
-    const [rows] = await pool.query<{ count: number }[]>(
+    const [rows] = await pool.query<EarlyAccessRow[]>(
       'SELECT COUNT(*) as count FROM early_access'
     );
 

@@ -1,9 +1,15 @@
 import pool from '@/lib/db';
 import { sendEarlyAccessWelcome } from '@/lib/email';
+import type { RowDataPacket } from 'mysql2';
 
 export const runtime = 'nodejs';
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+type EarlyAccessRow = RowDataPacket & {
+  id: number;
+  email: string;
+};
 
 export async function POST(request: Request) {
   let payload: { email?: string } | null = null;
@@ -27,10 +33,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const [existing] = await pool.query<{
-      id: number;
-      email: string;
-    }[]>(
+    const [existing] = await pool.query<EarlyAccessRow[]>(
       'SELECT id, email FROM early_access WHERE email = ? LIMIT 1',
       [email]
     );
